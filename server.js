@@ -2,12 +2,32 @@ const express = require('express'),
   proxy = require('http-proxy-middleware'),
   app = express(),
   url = 'http://nekopoi.space',
+  pmx = require('pmx'),
+  probe = pmx.probe(),
   nekopi = {
     target: url,
     changeOrigin: true,
     ws: false,
     logLevel: 'silent'
   };
+
+pmx.init({
+  http : true,
+  errors : true,
+  custom_probes : true,
+  network : true,
+  ports : true
+});
+
+const count = probe.counter({
+  name : 'Request Count',
+  agg_type : 'sum'
+});
+
+app.use(function(req, res, next) {
+  count.inc();
+  next();
+});
 
 //
 // Listen for the `error` event on `proxy`.
