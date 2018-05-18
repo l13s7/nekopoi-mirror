@@ -1,7 +1,7 @@
 const express = require('express'),
   proxy = require('http-proxy-middleware'),
   app = express(),
-  url = 'http://nekopoi.faith',
+  url = 'http://nekopoi.care',
   pmx = require('pmx'),
   probe = pmx.probe(),
   nekopi = {
